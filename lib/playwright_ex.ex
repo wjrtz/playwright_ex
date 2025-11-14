@@ -9,7 +9,6 @@ defmodule PlaywrightEx do
   >
   > This is an early stage, experimental, version.
   > The API is subject to change.
-  > Not ready for production use.
 
   ## Getting started
   1. Add dependency

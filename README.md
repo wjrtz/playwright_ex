@@ -15,7 +15,6 @@ Helpful for web scraping and agentic AI.
 >
 > This is an early stage, experimental, version.
 > The API is subject to change.
-> Not ready for production use.
 
 Please [get in touch](https://ftes.de) with feedback of any shape and size.
 
