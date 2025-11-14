@@ -1,2 +1,2 @@
 ExUnit.start()
-{:ok, _} = PlaywrightEx.Connection.start_link()
+{:ok, _} = PlaywrightEx.Supervisor.start_link()

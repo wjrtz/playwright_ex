@@ -20,7 +20,7 @@ defmodule PlaywrightEx do
           npm --prefix assets exec -- playwright install chromium --with-deps
 
   3. Start connection (or add to supervision tree)
-          {:ok, _} = PlaywrightEx.Connection.start_link()
+          {:ok, _} = PlaywrightEx.Supervisor.start_link()
 
   4. Use it
           browser_id = PlaywrightEx.launch_browser(:chromium)

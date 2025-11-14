@@ -22,6 +22,11 @@ defmodule PlaywrightEx.Connection do
   @name __MODULE__
 
   @doc false
+  def child_spec([]) do
+    %{id: __MODULE__, start: {__MODULE__, :start_link, []}}
+  end
+
+  @doc false
   def start_link do
     :gen_statem.start_link({:local, @name}, __MODULE__, :no_init_arg, timeout: Config.global(:timeout))
   end
@@ -81,7 +86,6 @@ defmodule PlaywrightEx.Connection do
 
   @impl :gen_statem
   def init(:no_init_arg) do
-    {:ok, _port_server} = PortServer.start_link(self())
     msg = %{guid: "", params: %{sdk_language: :javascript}, method: :initialize, metadata: %{}}
     PortServer.post(msg)
 
