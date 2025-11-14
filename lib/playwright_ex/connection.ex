@@ -90,7 +90,7 @@ defmodule PlaywrightEx.Connection do
 
   @doc false
   def pending(:cast, {:msg, %{method: :__create__, params: %{guid: "Playwright"}} = msg}, data) do
-    {:next_state, :started, add_initializer(data, msg)}
+    {:next_state, :started, handle_create(data, msg)}
   end
 
   def pending(:cast, _msg, _data), do: {:keep_state_and_data, [:postpone]}
@@ -135,14 +135,22 @@ defmodule PlaywrightEx.Connection do
   end
 
   def started(:cast, {:msg, msg}, data) do
-    {:keep_state, data |> add_initializer(msg) |> notify_subscribers(msg)}
+    {:keep_state, data |> handle_create(msg) |> handle_dispose(msg) |> notify_subscribers(msg)}
   end
 
-  defp add_initializer(data, %{method: :__create__} = msg) do
+  defp handle_create(data, %{method: :__create__} = msg) do
     put_in(data.initializers[msg.params.guid], msg.params.initializer)
   end
 
-  defp add_initializer(data, _msg), do: data
+  defp handle_create(data, _msg), do: data
+
+  defp handle_dispose(data, %{method: :__dispose__} = msg) do
+    data
+    |> Map.update!(:initializers, &Map.delete(&1, msg.guid))
+    |> Map.update!(:guid_subscribers, &Map.delete(&1, msg.guid))
+  end
+
+  defp handle_dispose(data, _msg), do: data
 
   defp notify_subscribers(data, msg) when is_map_key(data.guid_subscribers, msg.guid) do
     for pid <- Map.fetch!(data.guid_subscribers, msg.guid), do: send(pid, {:playwright_msg, msg})

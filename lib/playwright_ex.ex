@@ -43,11 +43,6 @@ defmodule PlaywrightEx do
   ## Comparison to playwright-elixir
   `playwright-elixir` built on the python client and tried to provide a comprehensive client from the start.
   `playwright_ex` instead is a ground-up implementation. It is not intended to be comprehensive. Rather, it is intended to be simple and easy to extend.
-
-
-  ## To do
-  - Fix memory leak: Clear memory when resource is destroyed (`PlaywrightEx.Connection` never frees any `initializers` data).
-  - Refactor: Consider spawning one process per resource.
   """
   alias PlaywrightEx.Connection
 
