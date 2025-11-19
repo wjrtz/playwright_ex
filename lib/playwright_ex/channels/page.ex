@@ -21,7 +21,7 @@ defmodule PlaywrightEx.Page do
     # Playwright options: https://playwright.dev/docs/api/class-page#page-screenshot
     params =
       opts
-      |> Keyword.validate!(full_page: true, omit_background: false)
+      |> Keyword.validate!([:timeout, full_page: true, omit_background: false])
       |> Map.new()
 
     %{guid: page_id, method: :screenshot, params: params}

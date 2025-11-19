@@ -28,7 +28,7 @@ defmodule PlaywrightEx.BrowserContext do
   end
 
   def clear_cookies(context_id, opts \\ []) do
-    opts = Keyword.validate!(opts, ~w(domain name path)a)
+    opts = Keyword.validate!(opts, ~w(domain name path timeout)a)
 
     %{guid: context_id, method: :clear_cookies, params: Map.new(opts)}
     |> Connection.send(opts[:timeout])

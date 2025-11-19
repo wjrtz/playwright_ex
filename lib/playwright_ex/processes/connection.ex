@@ -153,7 +153,7 @@ defmodule PlaywrightEx.Connection do
   defp handle_dispose(data, _msg), do: data
 
   defp notify_subscribers(data, msg) when is_map_key(data.guid_subscribers, msg.guid) do
-    for pid <- Map.fetch!(data.guid_subscribers, msg.guid), do: send(pid, {:playwright_msg, msg})
+    for pid <- Map.fetch!(data.guid_subscribers, msg.guid), do: Kernel.send(pid, {:playwright_msg, msg})
     data
   end
 
