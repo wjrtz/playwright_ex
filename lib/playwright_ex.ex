@@ -13,7 +13,7 @@ defmodule PlaywrightEx do
   ## Getting started
   1. Add dependency
           # mix.exs
-          {:playwright_ex, "~> 0.1"}
+          {:playwright_ex, "~> 0.2"}
 
   2. Install playwright and browser
           npm --prefix assets i -D playwright
