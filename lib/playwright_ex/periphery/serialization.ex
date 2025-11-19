@@ -1,8 +1,6 @@
 defmodule PlaywrightEx.Serialization do
   @moduledoc false
 
-  require Logger
-
   def camelize(input), do: input |> to_string() |> camelize(:lower)
   def underscore(string), do: string |> Macro.underscore() |> String.to_atom()
 
