@@ -2,9 +2,10 @@ defmodule PlaywrightEx.Channel do
   @moduledoc false
   def timeout_opt, do: [type: :timeout, required: true, doc: "Maximum time for the operation (milliseconds)."]
 
-  @debug_unknown true
+  # set to true to find unknown flags during local development
+  @fail_on_unknown_opts false
 
-  if @debug_unknown do
+  if @fail_on_unknown_opts do
     def validate_known!(opts, schema) do
       NimbleOptions.validate!(opts, schema)
     end

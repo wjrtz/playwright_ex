@@ -191,13 +191,12 @@ defmodule PlaywrightEx.Frame do
   @doc """
   Sends keydown, keypress/input, and keyup events for each character in the text.
 
-  Note: `type` is deprecated. Use `fill/2` or `press/2` instead.
-
   Reference: https://playwright.dev/docs/api/class-frame#frame-type
 
   ## Options
   #{NimbleOptions.docs(schema)}
   """
+  @doc deprecated: "Use `fill/2` or `press/2` instead"
   @schema schema
   @type type_opt :: unquote(NimbleOptions.option_typespec(schema))
   @spec type(PlaywrightEx.guid(), [type_opt() | {Keyword.key(), any()}]) ::
@@ -269,7 +268,10 @@ defmodule PlaywrightEx.Frame do
   end
 
   schema =
-    NimbleOptions.new!(timeout: PlaywrightEx.Channel.timeout_opt())
+    NimbleOptions.new!(
+      timeout: PlaywrightEx.Channel.timeout_opt(),
+      selector: [type: :string, required: true]
+    )
 
   @doc """
   Returns when element specified by selector satisfies state option. Returns `nil` if waiting for `hidden` or `detached`.

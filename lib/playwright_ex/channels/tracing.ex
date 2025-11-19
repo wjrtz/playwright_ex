@@ -14,6 +14,10 @@ defmodule PlaywrightEx.Tracing do
   schema =
     NimbleOptions.new!(
       timeout: PlaywrightEx.Channel.timeout_opt(),
+      title: [
+        type: :string,
+        doc: "Trace name to be shown in the Trace Viewer."
+      ],
       screenshots: [
         type: :boolean,
         doc: "Whether to capture screenshots during tracing"
@@ -49,7 +53,13 @@ defmodule PlaywrightEx.Tracing do
   end
 
   schema =
-    NimbleOptions.new!(timeout: PlaywrightEx.Channel.timeout_opt())
+    NimbleOptions.new!(
+      timeout: PlaywrightEx.Channel.timeout_opt(),
+      title: [
+        type: :string,
+        doc: "Trace name to be shown in the Trace Viewer."
+      ]
+    )
 
   @doc """
   Starts a new chunk in the tracing.
