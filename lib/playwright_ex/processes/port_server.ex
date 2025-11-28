@@ -44,6 +44,7 @@ defmodule PlaywrightEx.PortServer do
     port =
       Port.open({:spawn_executable, runner}, [
         :binary,
+        :stderr_to_stdout,
         args: ["playwright", "run-driver"],
         cd: assets_dir
       ])
