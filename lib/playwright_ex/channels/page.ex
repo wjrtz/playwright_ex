@@ -41,6 +41,35 @@ defmodule PlaywrightEx.Page do
   schema =
     NimbleOptions.new!(
       timeout: PlaywrightEx.Channel.timeout_opt(),
+      wait_until: [
+        type: {:in, [:load, :domcontentloaded, :networkidle, :commit]},
+        doc: "When to consider operation succeeded, defaults to `load`."
+      ]
+    )
+
+  @doc """
+  Reloads the current page.
+
+  Reference: https://playwright.dev/docs/api/class-page#page-reload
+
+  ## Options
+  #{NimbleOptions.docs(schema)}
+  """
+  @schema schema
+  @type reload_opt :: unquote(NimbleOptions.option_typespec(schema))
+  @spec reload(PlaywrightEx.guid(), [reload_opt() | PlaywrightEx.unknown_opt()]) ::
+          {:ok, any()} | {:error, any()}
+  def reload(page_id, opts \\ []) do
+    {timeout, opts} = opts |> PlaywrightEx.Channel.validate_known!(@schema) |> Keyword.pop!(:timeout)
+
+    %{guid: page_id, method: :reload, params: Map.new(opts)}
+    |> Connection.send(timeout)
+    |> ChannelResponse.unwrap(& &1)
+  end
+
+  schema =
+    NimbleOptions.new!(
+      timeout: PlaywrightEx.Channel.timeout_opt(),
       full_page: [
         type: :boolean,
         doc:
